@@ -10,19 +10,32 @@ angular.module('NarrowItDownApp', [])
 
 
 function FoundItemsDirective() {
+  // var ddo = {
+  //   templateUrl: 'foundItems.html',
+  //   scope: {
+  //     items: '<',
+  //     myTitle: '@title',
+  //     onRemove: '&'
+  //   },
+  //   controller: FoundItemsDirectiveController,
+  //   controllerAs: 'list',
+  //   bindToController: true
+  // };
+  //
+  // return ddo;
   var ddo = {
-    templateUrl: 'foundItems.html',
-    scope: {
-      items: '<',
-      myTitle: '@title',
-      onRemove: '&'
-    },
-    controller: FoundItemsDirectiveController,
-    controllerAs: 'list',
-    bindToController: true
-  };
+  templateUrl: 'foundItems.html',
+  scope: {
+    items: '<',
+    title: '@'
+  },
+  // controller: 'ShoppingListDirectiveController as list',
+  controller: FoundItemsDirectiveController,
+  controllerAs: 'list',
+  bindToController: true
+};
 
-  return ddo;
+return ddo;
 }
 
 
@@ -47,6 +60,7 @@ function NarrowItDownController(MenuSearchService) {
   let narrowItDown = this;
   narrowItDown.searchText = "";
   narrowItDown.title = "Narrowed items list";
+  narrowItDown.found = [];
 
   narrowItDown.narrowItForMe = (searchText) => {
     console.log(searchText);
