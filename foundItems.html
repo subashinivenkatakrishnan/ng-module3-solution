@@ -1,0 +1,8 @@
+<h3>Title: {{ list.myTitle }}</h3>
+<ol>
+  <li ng-repeat="item in list.items">
+    Name: {{ item.name }}, Short Name: {{ item.short_name }}, Description: {{item.desciption}}
+    <!-- <button ng-click="list.onRemove({index: $index});">Don't want this one!</button> -->
+  </li>
+</ol>
+<!-- <div class="error" ng-if="list.cookiesInList()">WARNING! WARNING! COOKIES DETECTED!</div> -->
