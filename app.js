@@ -10,50 +10,23 @@ angular.module('NarrowItDownApp', [])
 
 
 function FoundItemsDirective() {
-  // var ddo = {
-  //   templateUrl: 'foundItems.html',
-  //   scope: {
-  //     items: '<',
-  //     myTitle: '@title',
-  //     onRemove: '&'
-  //   },
-  //   controller: FoundItemsDirectiveController,
-  //   controllerAs: 'list',
-  //   bindToController: true
-  // };
-  //
-  // return ddo;
   var ddo = {
-  templateUrl: 'foundItems.html',
-  scope: {
-    items: '<',
-    title: '@'
-  },
-  // controller: 'ShoppingListDirectiveController as list',
-  controller: FoundItemsDirectiveController,
-  controllerAs: 'list',
-  bindToController: true
-};
-
-return ddo;
+    templateUrl: 'foundItems.html',
+    scope: {
+      items: '<',
+      title: '@',
+      onRemove: '&'
+    },
+    controller: FoundItemsDirectiveController,
+    controllerAs: 'list',
+    bindToController: true
+  };
+  return ddo;
 }
 
-
-function FoundItemsDirectiveController() {
-  var list = this;
-
-  // list.cookiesInList = function () {
-  //   for (var i = 0; i < list.items.length; i++) {
-  //     var name = list.items[i].name;
-  //     if (name.toLowerCase().indexOf("cookie") !== -1) {
-  //       return true;
-  //     }
-  //   }
-
-    return false;
-  //};
-}
-
+//empty directive controller as this is not
+//needed in the assignment to do anything
+function FoundItemsDirectiveController() {}
 
 NarrowItDownController.$inject = ['MenuSearchService'];
 function NarrowItDownController(MenuSearchService) {
@@ -62,8 +35,8 @@ function NarrowItDownController(MenuSearchService) {
   narrowItDown.title = "Narrowed items list";
   narrowItDown.found = [];
 
+//function to narrow down the menu and store it in found array
   narrowItDown.narrowItForMe = (searchText) => {
-    console.log(searchText);
     let promise = MenuSearchService.getMatchedMenuItems(searchText);
     promise.then((foundItems) => {
       if(foundItems.length === 0) {
@@ -72,21 +45,21 @@ function NarrowItDownController(MenuSearchService) {
       } else {
         narrowItDown.errorMessage = "";
         narrowItDown.found = foundItems;
-        console.log(narrowItDown.found)
       }
     })
     .catch(function (error) {
         console.log("Something went terribly wrong.");
     });
 
-    // narrowItDown.removeItem = function (itemIndex) {
-    //   this.lastRemoved = "Last item removed was " + this.items[itemIndex].name;
-    //   shoppingList.removeItem(itemIndex);
-    //   this.title = origTitle + " (" + list.items.length + " items )";
-    // };
+// function to remove the item the user doesnt want
+    narrowItDown.removeItem = function (itemIndex) {
+      narrowItDown.found.splice(itemIndex, 1);
+    };
+
   }
 }
 
+//Filter to search menu items that match description
 function SearchTermFilter() {
   return function (input, target, key) {
     //From input array find the item whose desciption key
@@ -103,6 +76,7 @@ MenuSearchService.$inject = ['$http', 'ApiBasePath', '$q', 'searchTermFilter'];
 function MenuSearchService($http, ApiBasePath, $q, searchTermFilter) {
   var service = this;
 
+//function that returns the response wrapped in a promise
   service.getMatchedMenuItems = function (searchTerm) {
     let deferred = $q.defer();
     if (searchTerm === "") {
@@ -116,15 +90,14 @@ function MenuSearchService($http, ApiBasePath, $q, searchTermFilter) {
         return foundItems;
       });
     }
-
   }
 
+ //http request to the menu
   service.getMenuItems = function () {
     var response = $http({
       method: "GET",
       url: (ApiBasePath + "/menu_items.json"),
     });
-
     return response;
   };
 

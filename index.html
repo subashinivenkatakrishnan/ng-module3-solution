@@ -18,19 +18,13 @@
     <div class="form-group narrow-button">
       <button class="btn btn-primary" ng-click="narrowItDown.narrowItForMe(narrowItDown.searchText)">Narrow It Down For Me!</button>
     </div>
+    <br/>
+    <!-- show error errorMessage -->
     <div ng-hide="!narrowItDown.errorMessage" class="error">{{narrowItDown.errorMessage}}</div>
     <br/>
-    <!-- <shopping-list
-      items="list.items"
-      title="{{list.title}}"
-      bad-remove="list.removeItem"
-      on-remove="list.removeItem(index)"></shopping-list> -->
-    <!-- found-items should be implemented as a component -->
-    <!-- <found-items
-      found-items="narrowItDown.found"
-      ></found-items> -->
+    <!-- Show narrowed list only when atleast 1 item is present -->
     <div ng-if="narrowItDown.found.length !== 0">
-      <found-items items="narrowItDown.found" title="{{narrowItDown.title}}"></shopping-list>
+      <found-items items="narrowItDown.found" title="{{narrowItDown.title}}" on-remove="narrowItDown.removeItem(index)"></found-items>
     </div>
   </div>
 

@@ -30,6 +30,13 @@ input[type="text"] {
   width: 3em;
   height: 3em;
 }
+
+.error {
+  color: red;
+  font-weight: bold;
+  font-size: '20px';
+}
+
 @-webkit-keyframes load8 {
   0% {
     -webkit-transform: rotate(0deg);
